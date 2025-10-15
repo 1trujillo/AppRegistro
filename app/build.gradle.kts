@@ -6,9 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.appregistro"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.appregistro"
@@ -38,10 +36,18 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
 dependencies {
+    // ...
+    // Para AppCompat
+    implementation("androidx.appcompat:appcompat:1.6.1") // O la versión más reciente
+
+    // Para el ViewModel y LiveData
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2") // O la versión más reciente
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2") // O la versión más reciente
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
