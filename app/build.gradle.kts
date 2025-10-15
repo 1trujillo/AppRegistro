@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.android.material:material:1.12.0")
     // ...
     // Para AppCompat
     implementation("androidx.appcompat:appcompat:1.6.1") // O la versión más reciente

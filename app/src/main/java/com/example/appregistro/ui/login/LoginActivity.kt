@@ -1,4 +1,4 @@
-package com.example.appregistro.ui
+package com.example.appregistro.ui.login
 
 import android.os.Bundle
 import android.widget.Toast
