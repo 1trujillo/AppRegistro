@@ -1,8 +1,6 @@
 package com.example.appregistro.data.model
 
-data class Usuario (
-    val email: String,
-    val password: String,
-    val nombre: String,
-    val apellido: String
+data class Usuario(
+    val username: String,
+    val password: String
 )

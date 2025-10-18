@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppRegistro">
 
-        <!-- 👇 Aquí el paquete completo -->
+        <!-- 1. Activity de INICIO: LoginActivity (Ubicación: .ui.login) -->
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
@@ -22,8 +22,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" />
+        <!-- 2. Activity Principal (MANTENIDA): Debe apuntar a su ubicación real: .ui.main -->
+        <activity android:name=".ui.main.MainActivity" />
+
+        <!-- 3. Activity de Registro: También debe ser declarada si existe (Ubicación: .ui.register) -->
+        <activity android:name=".ui.register.RegisterActivity" />
+
+        <!-- LÍNEA ELIMINADA/COMENTADA: activity android:name=".MainActivity" /-->
 
     </application>
-
 </manifest>

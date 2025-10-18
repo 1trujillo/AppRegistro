@@ -1,28 +1,65 @@
-// Archivo: AuthViewModel.kt
 package com.example.appregistro.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.appregistro.data.model.Usuario
+import androidx.lifecycle.viewModelScope
 import com.example.appregistro.data.repository.AuthRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
 
-    private val authRepository = AuthRepository()
+    private val _isLoggedIn = MutableStateFlow(false)
+    val isLoggedIn: StateFlow<Boolean> = _isLoggedIn
 
-    // LiveData para observar el estado del login
-    private val _loginResult = MutableLiveData<Boolean>()
-    val loginResult: LiveData<Boolean> = _loginResult
+    private val _username = MutableStateFlow<String?>(null)
+    val username: StateFlow<String?> = _username
 
-    // Función que la View llamará para iniciar sesión
-    fun login(email: String, password: String) {
-        val result = authRepository.login(email, password)
-        _loginResult.value = result
+    init {
+        // Cargar estado inicial
+        checkSession()
+        loadUsername()
     }
 
-    // Función para el registro
-    fun register(usuario: Usuario) {
-        // Lógica de registro...
+    fun checkSession() {
+        viewModelScope.launch {
+            _isLoggedIn.value = repository.isLoggedIn()
+        }
+    }
+
+    private fun loadUsername() {
+        viewModelScope.launch {
+            _username.value = repository.getUsername()
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            repository.setLoggedIn(false)
+            _isLoggedIn.value = false
+        }
+    }
+
+    suspend fun getUsername(): String? {
+        return repository.getUsername()
+    }
+
+    fun login(username: String, password: String) {
+        viewModelScope.launch {
+            val success = repository.login(username, password)
+            _isLoggedIn.value = success
+            if (success) {
+                _username.value = username
+            }
+        }
+    }
+
+    fun register(username: String, password: String) {
+        viewModelScope.launch {
+            repository.register(username, password)
+            _username.value = username
+            _isLoggedIn.value = true
+            repository.setLoggedIn(true)
+        }
     }
 }

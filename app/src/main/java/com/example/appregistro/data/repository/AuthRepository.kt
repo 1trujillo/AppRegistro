@@ -1,21 +1,30 @@
 // Archivo: AuthRepository.kt
 package com.example.appregistro.data.repository
 
-import com.example.appregistro.data.model.Usuario
+import com.example.appregistro.data.UserDataStore
+import kotlinx.coroutines.flow.firstOrNull
 
-class AuthRepository {
-    // Esta función simula un inicio de sesión exitoso o fallido
-    fun login(email: String, password: String): Boolean {
-        // En un caso real, aquí harías una llamada a una API
-        // o a una base de datos.
-        // Por ahora, solo simularemos un usuario válido.
-        return email == "test@example.com" && password == "password123"
+class AuthRepository(private val userDataStore: UserDataStore) {
+
+    suspend fun register(username: String, password: String) {
+        userDataStore.saveUser(username, password)
     }
 
-    // Esta función simula un registro
-    fun register(usuario: Usuario): Boolean {
-        // Lógica para registrar al usuario
-        // Por ahora, siempre retornaremos true
-        return true
+    suspend fun login(username: String, password: String): Boolean {
+        val savedUser = userDataStore.getUsername().firstOrNull()
+        val savedPass = userDataStore.getPassword().firstOrNull()
+        return username == savedUser && password == savedPass
+    }
+
+    suspend fun setLoggedIn(isLoggedIn: Boolean) {
+        userDataStore.setLoggedIn(isLoggedIn)
+    }
+
+    suspend fun isLoggedIn(): Boolean {
+        return userDataStore.isLoggedIn().firstOrNull() ?: false
+    }
+
+    suspend fun getUsername(): String? {
+        return userDataStore.getUsername().firstOrNull()
     }
 }
