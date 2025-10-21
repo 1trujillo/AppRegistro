@@ -1,12 +1,12 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.parcelize")
 }
 
 android {
     namespace = "com.example.appregistro"
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.appregistro"
@@ -37,25 +37,33 @@ android {
     }
 
     buildFeatures {
-        compose = true
         viewBinding = true
+        dataBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.2" // compatible con Kotlin 1.9.0
     }
 }
 
 dependencies {
     // Material Design
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation("com.google.android.material:material:1.12.0")
+    implementation(platform("androidx.compose:compose-bom:2024.09.01")) // tu BOM actual ya debería funcionar
+
 
     // AppCompat y Core
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.core:core-ktx:1.13.1")
 
-    // ViewModel + LiveData (arquitectura)
+    // ViewModel + LiveData
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
 
-    // Necesario para usar viewModels() en Activities o Fragments (XML)
+    // Para usar viewModels() en Activities o Fragments
     implementation("androidx.activity:activity-ktx:1.9.2")
 
     // Jetpack Compose
@@ -67,7 +75,7 @@ dependencies {
     implementation("androidx.compose.foundation:foundation")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
 
-    // ✅ DataStore (para guardar sesión de usuario)
+    // DataStore
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("androidx.datastore:datastore-core:1.1.1")
 

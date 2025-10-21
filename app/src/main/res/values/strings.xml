@@ -1,6 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AppRegistro</string>
+
+    <!-- Hints / botones usados en layouts -->
     <string name="hint_email">Correo electrónico</string>
     <string name="hint_password">Contraseña</string>
     <string name="btn_login">Iniciar sesión</string>
+
+    <!-- Descripciones accesibilidad (las que agregaste) -->
+    <string name="cd_email_input">Campo de email</string>
+    <string name="cd_password_input">Campo de contraseña</string>
+    <string name="cd_login_button">Botón iniciar sesión</string>
+    <string name="cd_go_to_register">Ir a registro</string>
+    <string name="cd_welcome">Mensaje de bienvenida</string>
+    <string name="cd_logout_button">Botón cerrar sesión</string>
+    <string name="cd_username_input">Campo nombre de usuario</string>
+    <string name="cd_register_button">Botón registrarse</string>
 </resources>

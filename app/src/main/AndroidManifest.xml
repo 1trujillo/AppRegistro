@@ -1,18 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppRegistro">
 
-        <!-- 1. Activity de INICIO: LoginActivity (Ubicación: .ui.login) -->
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
@@ -22,13 +17,9 @@
             </intent-filter>
         </activity>
 
-        <!-- 2. Activity Principal (MANTENIDA): Debe apuntar a su ubicación real: .ui.main -->
-        <activity android:name=".ui.main.MainActivity" />
-
-        <!-- 3. Activity de Registro: También debe ser declarada si existe (Ubicación: .ui.register) -->
-        <activity android:name=".ui.register.RegisterActivity" />
-
-        <!-- LÍNEA ELIMINADA/COMENTADA: activity android:name=".MainActivity" /-->
-
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
     </application>
+
 </manifest>

@@ -14,6 +14,8 @@ import com.example.appregistro.databinding.ActivityLoginBinding
 import com.example.appregistro.viewmodel.LoginViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import com.example.appregistro.ui.register.RegisterActivity
+import com.example.appregistro.MainActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -24,7 +26,11 @@ class LoginActivity : AppCompatActivity() {
         val repo = AuthRepository(UserDataStore(this))
         object : androidx.lifecycle.ViewModelProvider.Factory {
             override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
-                return LoginViewModel(repo) as T
+                if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+                    @Suppress("UNCHECKED_CAST")
+                    return LoginViewModel(repo) as T
+                }
+                throw IllegalArgumentException("Unknown ViewModel class")
             }
         }
     }
@@ -34,16 +40,23 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // ✅ Observa el estado del login usando repeatOnLifecycle (no deprecated)
+        // ✅ Observa el estado del login usando repeatOnLifecycle
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.loginSuccess.collectLatest { success ->
-                    success?.let {
-                        if (it) {
+                    when (success) {
+                        true -> {
                             Toast.makeText(this@LoginActivity, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
-                            // TODO: navegar a MainActivity
-                        } else {
+                            // Navegar a MainActivity
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finish() // para no volver al login
+                        }
+                        false -> {
                             Toast.makeText(this@LoginActivity, "Credenciales inválidas", Toast.LENGTH_SHORT).show()
+                        }
+                        null -> {
+                            // No hacer nada aún
                         }
                     }
                 }
@@ -54,14 +67,22 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
+
+            if (email.isEmpty()) {
+                binding.etEmail.error = "El correo es obligatorio"
+                return@setOnClickListener
+            }
+            if (password.isEmpty()) {
+                binding.etPassword.error = "La contraseña es obligatoria"
+                return@setOnClickListener
+            }
+
             loginViewModel.login(email, password)
         }
+
         // ✅ Ir a pantalla de registro
         binding.tvGoToRegister.setOnClickListener {
-            val intent = Intent(this, com.example.appregistro.ui.register.RegisterActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
-
     }
-
 }
