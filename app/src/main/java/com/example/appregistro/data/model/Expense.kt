@@ -8,5 +8,6 @@ data class Expense(
     val id: Int = (0..100000).random(),
     val amount: Double,
     val category: String,
-    val description: String
+    val description: String,
+    val title: String
 ) : Parcelable

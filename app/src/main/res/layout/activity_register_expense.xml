@@ -1,35 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="24dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/etAmount"
+        android:id="@+id/etTitle"
+        android:hint="Título del gasto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/etAmount"
         android:hint="Monto"
-        android:inputType="numberDecimal"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal" />
 
     <EditText
         android:id="@+id/etCategory"
+        android:hint="Categoría"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Categoría"/>
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/etDescription"
+        android:hint="Descripción"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descripción"/>
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/btnSubmit"
+        android:text="Guardar gasto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Agregar gasto"
-        android:layout_marginTop="16dp"/>
-
+        android:layout_height="wrap_content" />
 </LinearLayout>

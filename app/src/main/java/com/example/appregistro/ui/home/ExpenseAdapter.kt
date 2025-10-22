@@ -16,7 +16,7 @@ class ExpenseAdapter(
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         val tvAmount: TextView = view.findViewById(R.id.tvAmount)
         val tvCategory: TextView = view.findViewById(R.id.tvCategory)
-        val tvDesc: TextView = view.findViewById(R.id.tvDesc)
+        val tvDesc = view.findViewById<TextView>(R.id.tvTitle)
 
         init {
             view.setOnClickListener {

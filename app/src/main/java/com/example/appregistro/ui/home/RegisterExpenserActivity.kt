@@ -15,18 +15,20 @@ class RegisterExpenseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_expense)
 
+        val etTitle = findViewById<EditText>(R.id.etTitle)
         val etAmount = findViewById<EditText>(R.id.etAmount)
         val etCategory = findViewById<EditText>(R.id.etCategory)
         val etDescription = findViewById<EditText>(R.id.etDescription)
         val btnSubmit = findViewById<Button>(R.id.btnSubmit)
 
         btnSubmit.setOnClickListener {
+            val title = etTitle.text.toString().trim()
             val amountStr = etAmount.text.toString().trim()
             val category = etCategory.text.toString().trim()
             val description = etDescription.text.toString().trim()
 
-            if (amountStr.isEmpty() || category.isEmpty()) {
-                Toast.makeText(this, "Completa al menos monto y categoría", Toast.LENGTH_SHORT).show()
+            if (title.isEmpty() || amountStr.isEmpty() || category.isEmpty()) {
+                Toast.makeText(this, "Completa título, monto y categoría", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -36,7 +38,13 @@ class RegisterExpenseActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val expense = Expense(amount = amount, category = category, description = description)
+            val expense = Expense(
+                title = title,
+                amount = amount,
+                category = category,
+                description = description
+            )
+
             val resultIntent = Intent().putExtra("expense", expense)
             setResult(RESULT_OK, resultIntent)
             finish()
