@@ -1,6 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.appregistro">
+
+    <!-- Permiso de cámara -->
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -10,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppRegistro">
 
-        <!-- Actividad principal de inicio (pantalla de login) -->
+        <activity android:name=".ui.home.DescriptionActivity" />
+        <activity android:name=".ui.home.ExpenseDetailActivity" />
+        <activity android:name=".ui.home.DetailedNoteActivity" />
+
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
@@ -20,14 +25,8 @@
             </intent-filter>
         </activity>
 
-        <!-- Actividad principal del registro de gastos -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".DescriptionActivity"
-            android:exported="false" />
-
+        <activity android:name=".MainActivity" android:exported="false"/>
+        <activity android:name=".DescriptionActivity" android:exported="false"/>
     </application>
 
 </manifest>

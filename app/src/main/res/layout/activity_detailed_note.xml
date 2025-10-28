@@ -1,55 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="16dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.home.DetailedNoteActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
 
         <TextView
-            android:id="@+id/tvNoteTitle"
-            android:layout_width="wrap_content"
+            android:id="@+id/textNombreGasto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Editar detalles"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:text="Nombre del gasto"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textCostoGasto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Costo del gasto"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
 
         <EditText
-            android:id="@+id/etLongDescription"
+            android:id="@+id/editDescripcion"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
+            android:hint="Escribe una descripción..."
+            android:minLines="4"
             android:gravity="top"
-            android:hint="Descripción larga..."
-            android:inputType="textMultiLine"
-            android:layout_marginTop="12dp" />
-
-        <!-- Placeholder para una imagen que añadirás luego con la cámara -->
-        <ImageView
-            android:id="@+id/ivPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:layout_marginTop="12dp"
-            android:contentDescription="Foto del objeto"
-            android:visibility="gone" />
-
-        <!-- Botón que por ahora solo abre la Activity; posteriormente manejará la cámara -->
-        <Button
-            android:id="@+id/btnTakePhoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tomar foto (pendiente)"
-            android:layout_marginTop="12dp" />
+            android:inputType="textMultiLine" />
 
         <Button
-            android:id="@+id/btnSaveLongDescription"
+            android:id="@+id/btnGuardarDescripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Guardar"
+            android:text="Guardar descripción"
             android:layout_marginTop="16dp" />
+
     </LinearLayout>
 </ScrollView>

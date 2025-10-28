@@ -1,13 +1,12 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <EditText
         android:id="@+id/etTitle"
-        android:hint="Nombre del gasto"
+        android:hint="Título"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -16,14 +15,6 @@
         android:hint="Monto"
         android:inputType="numberDecimal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/btnAgregarDescripcion"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Agregar descripción"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="@color/teal_700"
-        android:textColor="@android:color/white" />
-
+        android:layout_marginTop="8dp"/>
 </LinearLayout>

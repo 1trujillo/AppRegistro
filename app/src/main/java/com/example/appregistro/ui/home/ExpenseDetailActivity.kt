@@ -1,75 +1,48 @@
 package com.example.appregistro.ui.home
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.appregistro.R
+import com.example.appregistro.databinding.ActivityExpenseDetailBinding
 
 class ExpenseDetailActivity : AppCompatActivity() {
 
-    private lateinit var editNombreGasto: EditText
-    private lateinit var editCostoGasto: EditText
-    private lateinit var btnGuardar: Button
-    private lateinit var btnCancelar: Button
-    private lateinit var btnAgregarDescripcion: Button
-
-    private var descripcionLarga: String = ""
-    private var expensePosition: Int = -1
+    private lateinit var binding: ActivityExpenseDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_expense_detail)
+        binding = ActivityExpenseDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        editNombreGasto = findViewById(R.id.editNombreGasto)
-        editCostoGasto = findViewById(R.id.editCostoGasto)
-        btnGuardar = findViewById(R.id.btnGuardar)
-        btnCancelar = findViewById(R.id.btnCancelar)
-        btnAgregarDescripcion = findViewById(R.id.btnAgregarDescripcion)
-
-        // Recibir datos del gasto
-        intent?.let {
-            val nombre = it.getStringExtra("nombre")
-            val costo = it.getStringExtra("costo")
-            expensePosition = it.getIntExtra("position", -1)
-
-            nombre?.let { n -> editNombreGasto.setText(n) }
-            costo?.let { c -> editCostoGasto.setText(c) }
-        }
-
-        // Botón para abrir la pantalla de descripción larga
-        btnAgregarDescripcion.setOnClickListener {
-            val intentDesc = Intent(this, DescriptionActivity::class.java)
-            intentDesc.putExtra("descripcion_actual", descripcionLarga)
-            startActivityForResult(intentDesc, 1001)
+        // Botón Cancelar
+        binding.btnCancelar.setOnClickListener {
+            finish()
         }
 
         // Botón Guardar
-        btnGuardar.setOnClickListener {
-            val resultIntent = Intent().apply {
-                putExtra("nombre", editNombreGasto.text.toString())
-                putExtra("costo", editCostoGasto.text.toString())
-                putExtra("descripcion", descripcionLarga)
-                putExtra("position", expensePosition)
+        binding.btnGuardar.setOnClickListener {
+            val nombreGasto = binding.editNombreGasto.text.toString().trim()
+            val costoGasto = binding.editCostoGasto.text.toString().trim()
+
+            if (nombreGasto.isEmpty() || costoGasto.isEmpty()) {
+                Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Gasto guardado correctamente", Toast.LENGTH_SHORT).show()
+                finish()
             }
-            setResult(Activity.RESULT_OK, resultIntent)
-            finish()
         }
 
-        // Botón Cancelar
-        btnCancelar.setOnClickListener {
-            setResult(Activity.RESULT_CANCELED)
-            finish()
-        }
-    }
+        // Botón Agregar Descripción → abre otra pantalla
+        binding.btnAgregarDescripcion.setOnClickListener {
+            val nombreGasto = binding.editNombreGasto.text.toString().trim()
+            val costoGasto = binding.editCostoGasto.text.toString().trim()
 
-    // Recibir la descripción larga desde DescriptionActivity
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1001 && resultCode == RESULT_OK) {
-            descripcionLarga = data?.getStringExtra("descripcion") ?: ""
+            val intent = Intent(this, DetailedNoteActivity::class.java).apply {
+                putExtra("nombreGasto", nombreGasto)
+                putExtra("costoGasto", costoGasto)
+            }
+            startActivity(intent)
         }
     }
 }

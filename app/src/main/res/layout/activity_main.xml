@@ -1,19 +1,56 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
-    <Button
-        android:id="@+id/btnAddExpense"
-        android:layout_width="match_parent"
+    <!-- Título -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Agregar gasto" />
+        android:text="Pantalla Principal"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
+    <!-- ListView para gastos -->
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerHeight="8dp" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle"
+        android:layout_above="@id/btnCamera"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Botón de agregar gasto -->
+    <Button
+        android:id="@+id/btnAddExpense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar gasto"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@id/btnCamera"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Botón de cámara en la esquina inferior izquierda -->
+    <ImageButton
+        android:id="@+id/btnCamera"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:src="@android:drawable/ic_menu_camera"
+        android:background="@android:color/transparent"
+        android:contentDescription="Abrir cámara"/>
+
+    <!-- ImageView para mostrar la foto -->
+    <ImageView
+        android:id="@+id/ivPhoto"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        android:contentDescription="Foto tomada"/>
+
+</RelativeLayout>

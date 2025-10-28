@@ -1,65 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    tools:context=".ui.home.ExpenseDetailActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-        <TextView
-            android:id="@+id/tvId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ID" />
-
-        <TextView
-            android:id="@+id/tvTitle"
+        <EditText
+            android:id="@+id/editNombreGasto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Título"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"/>
+            android:hint="Nombre del gasto"
+            android:inputType="textPersonName" />
 
-        <TextView
-            android:id="@+id/tvAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Monto"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:id="@+id/tvCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Categoría"
-            android:layout_marginTop="6dp"/>
-
-        <TextView
-            android:id="@+id/tvDescription"
+        <EditText
+            android:id="@+id/editCostoGasto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Descripción corta"
-            android:layout_marginTop="8dp"/>
+            android:hint="Costo del gasto"
+            android:inputType="numberDecimal" />
 
-        <!-- Botón para editar/abrir la ventana de descripción larga y foto -->
-        <Button
-            android:id="@+id/btnOpenDetailedNote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Editar descripción / Añadir foto"
-            android:layout_marginTop="16dp"/>
         <Button
             android:id="@+id/btnAgregarDescripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Agregar descripción"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="@color/teal_700"
-            android:textColor="@android:color/white" />
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"
+            android:layout_marginTop="8dp" />
 
     </LinearLayout>
 </ScrollView>
