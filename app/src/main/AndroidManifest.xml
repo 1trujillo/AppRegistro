@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.appregistro">
 
@@ -12,10 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppRegistro">
 
+        <!-- Activities del proyecto -->
         <activity android:name=".ui.home.DescriptionActivity" />
         <activity android:name=".ui.home.ExpenseDetailActivity" />
         <activity android:name=".ui.home.DetailedNoteActivity" />
 
+        <!-- Activity de registro -->
+        <activity
+            android:name=".ui.register.RegisterActivity"
+            android:exported="false" />
+
+        <!-- Activity principal de login -->
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
@@ -25,8 +33,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" android:exported="false"/>
-        <activity android:name=".DescriptionActivity" android:exported="false"/>
-    </application>
+        <!-- Actividad principal (lista de gastos) -->
+        <activity android:name=".MainActivity" android:exported="false" />
+        <activity android:name=".DescriptionActivity" android:exported="false" />
 
+    </application>
 </manifest>
