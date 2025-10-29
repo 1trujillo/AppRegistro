@@ -33,8 +33,8 @@ class RegisterActivity : AppCompatActivity() {
         val btnRegister = findViewById<Button>(R.id.btnRegister)
 
         btnRegister.setOnClickListener {
-            val user = etUsername.text.toString()
-            val pass = etPassword.text.toString()
+            val user = etUsername.text.toString().trim()
+            val pass = etPassword.text.toString().trim()
 
             if (user.isEmpty() || pass.isEmpty()) {
                 Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
