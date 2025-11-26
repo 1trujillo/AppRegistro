@@ -5,9 +5,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Expense(
-    val id: Int = (0..100000).random(),
+    val id: Int? = null,
     val amount: Double,
     val category: String,
     val description: String,
-    val title: String
+    val title: String,
+    val userId: Int? = null
 ) : Parcelable

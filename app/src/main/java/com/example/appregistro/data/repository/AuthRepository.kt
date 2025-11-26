@@ -1,30 +1,30 @@
-// Archivo: AuthRepository.kt
 package com.example.appregistro.data.repository
 
 import com.example.appregistro.data.UserDataStore
-import kotlinx.coroutines.flow.firstOrNull
+import com.example.appregistro.data.model.*
+import com.example.appregistro.data.network.AuthApiService
+import com.example.appregistro.data.network.RetrofitClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class AuthRepository(private val userDataStore: UserDataStore) {
+class AuthRepository(
+    private val dataStore: UserDataStore
+) {
 
-    suspend fun register(username: String, password: String) {
-        userDataStore.saveUser(username, password)
-    }
+    private val api = RetrofitClient.instance.create(AuthApiService::class.java)
 
-    suspend fun login(username: String, password: String): Boolean {
-        val savedUser = userDataStore.getUsername().firstOrNull()
-        val savedPass = userDataStore.getPassword().firstOrNull()
-        return username == savedUser && password == savedPass
-    }
+    suspend fun register(email: String, password: String): Boolean =
+        withContext(Dispatchers.IO) {
+            val response = api.register(RegisterRequest(email, password))
+            return@withContext response.containsKey("message")
+        }
 
-    suspend fun setLoggedIn(isLoggedIn: Boolean) {
-        userDataStore.setLoggedIn(isLoggedIn)
-    }
+    suspend fun login(email: String, password: String): Boolean =
+        withContext(Dispatchers.IO) {
+            val user = api.login(LoginRequest(email, password))
 
-    suspend fun isLoggedIn(): Boolean {
-        return userDataStore.isLoggedIn().firstOrNull() ?: false
-    }
+            dataStore.saveUser(user.id, user.email)
 
-    suspend fun getUsername(): String? {
-        return userDataStore.getUsername().firstOrNull()
-    }
+            return@withContext true
+        }
 }

@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.appregistro.ui.home.RegisterExpenseActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,8 +20,35 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: SimpleAdapter
     private val data = mutableListOf<Map<String, String>>()
 
+    private val addExpenseLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+            if (result.resultCode == Activity.RESULT_OK) {
+                val expense = result.data?.getParcelableExtra<com.example.appregistro.data.model.Expense>("expense")
+                if (expense != null) {
+                    data.add(
+                        mapOf(
+                            "title" to expense.title,
+                            "amount" to "$${expense.amount}"
+                        )
+                    )
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 🟡 Validar sesión
+        val prefs = getSharedPreferences("session", MODE_PRIVATE)
+        val userId = prefs.getInt("userId", -1)
+        if (userId == -1) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
         setContentView(R.layout.activity_main)
 
         listView = findViewById(R.id.listView)
@@ -28,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         btnCamera = findViewById(R.id.btnCamera)
         ivPhoto = findViewById(R.id.ivPhoto)
 
-        // Datos de ejemplo
+        // 📌 Datos de ejemplo (se remplazarán por backend después)
         data.addAll(
             listOf(
                 mapOf("title" to "Supermercado", "amount" to "$20"),
@@ -42,11 +70,10 @@ class MainActivity : AppCompatActivity() {
         adapter = SimpleAdapter(this, data, R.layout.item_expense, from, to)
         listView.adapter = adapter
 
-        // ➕ Agregar nuevo gasto
+        // ➕ Agregar gasto (abre tu RegisterExpenseActivity)
         btnAddExpense.setOnClickListener {
-            val newExpense = mapOf("title" to "Nuevo gasto ${data.size + 1}", "amount" to "$0")
-            data.add(newExpense)
-            adapter.notifyDataSetChanged()
+            val intent = Intent(this, RegisterExpenseActivity::class.java)
+            addExpenseLauncher.launch(intent)
         }
 
         // ✏️ Editar gasto al hacer click
@@ -55,8 +82,10 @@ class MainActivity : AppCompatActivity() {
             showEditDialog(position, expense)
         }
 
-        // 📷 Abrir cámara usando Activity Result API
-        val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        // 📷 Cámara
+        val takePictureLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val imageBitmap = result.data?.extras?.get("data") as Bitmap
                 ivPhoto.setImageBitmap(imageBitmap)

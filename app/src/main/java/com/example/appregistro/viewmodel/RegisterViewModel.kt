@@ -5,12 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.appregistro.data.repository.AuthRepository
 import kotlinx.coroutines.launch
 
-class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
+class RegisterViewModel(private val repo: AuthRepository) : ViewModel() {
 
-    fun register(username: String, password: String, onRegistered: () -> Unit) {
+    fun register(email: String, password: String, onSuccess: () -> Unit, onError: () -> Unit) {
         viewModelScope.launch {
-            repository.register(username, password)
-            onRegistered()
+            val ok = repo.register(email, password)
+            if (ok) onSuccess() else onError()
         }
     }
 }

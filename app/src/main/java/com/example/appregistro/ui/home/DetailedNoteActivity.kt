@@ -21,6 +21,7 @@ class DetailedNoteActivity : AppCompatActivity() {
         binding.textCostoGasto.text = costoGasto
 
         binding.btnGuardarDescripcion.setOnClickListener {
+
             val descripcion = binding.editDescripcion.text.toString().trim()
             if (descripcion.isEmpty()) {
                 Toast.makeText(this, "Por favor, escribe una descripción", Toast.LENGTH_SHORT).show()

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.appregistro.R
 import com.example.appregistro.data.UserDataStore
 import com.example.appregistro.data.repository.AuthRepository
-import com.example.appregistro.ui.login.LoginActivity
+import com.example.appregistro.ui.auth.LoginActivity
 import com.example.appregistro.viewmodel.RegisterViewModel
 
 class RegisterActivity : AppCompatActivity() {
@@ -28,22 +28,23 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val etUsername = findViewById<EditText>(R.id.etUsername)
+        val etEmail = findViewById<EditText>(R.id.etUsername)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnRegister = findViewById<Button>(R.id.btnRegister)
 
         btnRegister.setOnClickListener {
-            val user = etUsername.text.toString().trim()
+            val email = etEmail.text.toString().trim()
             val pass = etPassword.text.toString().trim()
 
-            if (user.isEmpty() || pass.isEmpty()) {
+            if (email.isEmpty() || pass.isEmpty()) {
                 Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
             } else {
-                viewModel.register(user, pass) {
-                    Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
+                viewModel.register(email, pass, onSuccess = {
+                    Toast.makeText(this, "Usuario creado", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
-                }
+                }, onError = {
+                    Toast.makeText(this, "Ese correo ya está registrado", Toast.LENGTH_SHORT).show()
+                })
             }
         }
     }

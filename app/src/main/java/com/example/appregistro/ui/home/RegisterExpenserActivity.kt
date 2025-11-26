@@ -1,15 +1,26 @@
 package com.example.appregistro.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appregistro.R
 import com.example.appregistro.data.model.Expense
+import com.example.appregistro.data.repository.ExpenseRepository
+import com.example.appregistro.viewmodel.ExpenseViewModel
 
 class RegisterExpenseActivity : AppCompatActivity() {
+
+    private val viewModel by viewModels<ExpenseViewModel> {
+        val repo = ExpenseRepository()
+        object : androidx.lifecycle.ViewModelProvider.Factory {
+            override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
+                return ExpenseViewModel(repo) as T
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,12 +53,20 @@ class RegisterExpenseActivity : AppCompatActivity() {
                 title = title,
                 amount = amount,
                 category = category,
-                description = description
+                description = description,
+                userId = 1 // <- temporal, luego lo obtendremos del login
             )
 
-            val resultIntent = Intent().putExtra("expense", expense)
-            setResult(RESULT_OK, resultIntent)
-            finish()
+            viewModel.saveExpense(
+                expense,
+                onSuccess = {
+                    Toast.makeText(this, "Gasto guardado correctamente", Toast.LENGTH_SHORT).show()
+                    finish()
+                },
+                onError = {
+                    Toast.makeText(this, "Error al guardar gasto", Toast.LENGTH_SHORT).show()
+                }
+            )
         }
     }
 }
